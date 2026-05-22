@@ -1,23 +1,31 @@
-from flask import Flask, request, jsonify
+from flask import Flask, render_template, request, jsonify
 from ai_handler import convert_tone
 
 app = Flask(__name__)
+
 @app.route("/")
 def home():
-    return "AI Tone Converter Running..."
+    return render_template("index.html")
 
-@app.route("/convert", methods=["POST"])
+@app.route("/convert",methods=["POST"])
 def convert():
-    data = request.json
-    text = data.get("text")
-    tone = data.get("tone")
-    
-    result = convert_tone(text, tone)
-    return jsonify({
-        "original": text,
-        "tone": tone,
-        "converted": result
-    })
-    
+    data= request.json
+
+    text =(data.get("text") or "").strip()
+    tone= (data.get("tone") or"").strip()
+
+    if not text:
+        return jsonify({"error":"Please enter some text."}),400
+    if not tone:
+        return jsonify({"error":"Please select a tone."}),400
+    if len(text) >1000:
+        return jsonify({"error":"Text is too long.Max 1000 characters."}),400
+
+    try:
+        result= convert_tone(text,tone)
+        return jsonify({"converted":result})
+    except Exception as e:
+        return jsonify({"error":f"Conversion failed: {str(e)}"}), 500
+
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tone Converter</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>AI Tone Converter</h1>
+
+        <div class="textarea-wrapper">
+            <textarea id="inputText" placeholder="Enter your text here..." maxlength="1000"></textarea>
+            <span id="charCount" class="char-count">0 / 1000</span>
+        </div>
+
+        <div id="errorBox" class="error-box" style="display:none;"></div>
+
+        <div class="controls">
+            <select id="tone">
+                <option value="professional">Professional</option>
+                <option value="friendly">Friendly</option>
+                <option value="polite">Polite</option>
+                <option value="aggressive">Aggressive</option>
+                <option value="motivational">Motivational</option>
+                <option value="casual">Casual</option>
+                <option value="formal">Formal</option>
+                <option value="humorous">Humorous</option>
+            </select>
+
+            <button id="convertBtn" onclick="convertTone()">Convert Tone</button>
+        </div>
+
+        <div class="output-container">
+            <div class="output-header">
+                <h3>Converted Text</h3>
+                <button id="copyBtn" onclick="copyOutput()" style="display:none;">Copy</button>
+            </div>
+            <p id="outputText"></p>
+        </div>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
