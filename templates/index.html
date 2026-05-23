@@ -4,48 +4,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Tone Converter</title>
+    <title>tone</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
+    <div class="app">
 
-    <div class="container">
-
-        <h1>AI Tone Converter</h1>
-
-        <div class="textarea-wrapper">
-            <textarea id="inputText" placeholder="Enter your text here..." maxlength="1000"></textarea>
-            <span id="charCount" class="char-count">0 / 1000</span>
-        </div>
-
-        <div id="errorBox" class="error-box" style="display:none;"></div>
-
-        <div class="controls">
-            <select id="tone">
-                <option value="professional">Professional</option>
-                <option value="friendly">Friendly</option>
-                <option value="polite">Polite</option>
-                <option value="aggressive">Aggressive</option>
-                <option value="motivational">Motivational</option>
-                <option value="casual">Casual</option>
-                <option value="formal">Formal</option>
-                <option value="humorous">Humorous</option>
-            </select>
-
-            <button id="convertBtn" onclick="convertTone()">Convert Tone</button>
-        </div>
-
-        <div class="output-container">
-            <div class="output-header">
-                <h3>Converted Text</h3>
-                <button id="copyBtn" onclick="copyOutput()" style="display:none;">Copy</button>
+        <div class="topbar">
+            <div class="brand">tone<span>.</span>ai</div>
+            <div class="topbar-right">
+                <div class="status">
+                    <span class="sdot"></span>
+                    <span id="statusLabel">Groq · LLaMA 3.1 · free tier</span>
+                </div>
+                <div class="top-badge">AI Tone Converter</div>
             </div>
-            <p id="outputText"></p>
         </div>
 
-    </div>
+        <div class="body-grid">
 
+            <aside class="sidebar">
+                <div class="sidebar-top">
+                    <div class="s-label">Select tone</div>
+                    <div class="tone-list" id="toneList">
+                        <div class="tone-item sel" data-tone="professional">
+                            <span>Professional</span><span class="sel-bar"></span>
+                        </div>
+                        <div class="tone-item" data-tone="friendly">
+                            <span>Friendly</span><span class="sel-bar"></span>
+                        </div>
+                        <div class="tone-item" data-tone="casual">
+                            <span>Casual</span><span class="sel-bar"></span>
+                        </div>
+                        <div class="tone-item" data-tone="polite">
+                            <span>Polite</span><span class="sel-bar"></span>
+                        </div>
+                        <div class="tone-item" data-tone="aggressive">
+                            <span>Aggressive</span><span class="sel-bar"></span>
+                        </div>
+                        <div class="tone-item" data-tone="motivational">
+                            <span>Motivational</span><span class="sel-bar"></span>
+                        </div>
+                        <div class="tone-item" data-tone="formal">
+                            <span>Formal</span><span class="sel-bar"></span>
+                        </div>
+                        <div class="tone-item" data-tone="humorous">
+                            <span>Humorous</span><span class="sel-bar"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-bottom">
+                    <div class="s-label">Overview</div>
+                    <div class="stat-row">
+                        <div class="stat">
+                            <div class="stat-n">8</div>
+                            <div class="stat-l">tones</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-n">&lt;1s</div>
+                            <div class="stat-l">avg response</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-n">free</div>
+                            <div class="stat-l">forever</div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="main">
+
+                <div class="main-header">
+                    <div class="main-header-left">
+                        <h1 class="main-title">Rewrite anything.</h1>
+                        <p class="main-sub">Paste your text, pick a tone, get a perfect rewrite instantly.</p>
+                    </div>
+                    <div class="shortcut-hint">Ctrl + Enter to convert</div>
+                </div>
+
+                <div id="errorBox" class="error-box" style="display:none;"></div>
+
+                <div class="panels">
+                    <div class="panel panel-light">
+                        <div class="panel-head">
+                            <span class="p-label">Original text</span>
+                            <span id="charCount" class="p-count">0 / 1000</span>
+                        </div>
+                        <textarea id="inputText" placeholder="Paste or type your text here..."
+                            maxlength="1000"></textarea>
+                        <div class="panel-foot">
+                            <span class="p-foot-hint">plain text only</span>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-dark">
+                        <div class="panel-head">
+                            <span class="p-label">Converted text</span>
+                            <span class="p-badge" id="toneBadge">professional</span>
+                        </div>
+                        <div id="outputText" class="output-text is-placeholder">Your rewritten text will appear here...
+                        </div>
+                        <div class="panel-foot">
+                            <span class="p-via">
+                                <span class="via-dot" id="viaDot"></span>
+                                <span id="viaLabel">waiting</span>
+                            </span>
+                            <button id="copyInline" class="copy-inline" onclick="copyOutput()"
+                                style="display:none;">copy</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-row">
+                    <button class="btn-main" id="goBtn" onclick="convertTone()">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                        Convert tone
+                    </button>
+                    <button class="btn-sec" onclick="copyOutput()">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2" />
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                        </svg>
+                        Copy result
+                    </button>
+                    <div class="tagline">Say it right - every time</div>
+                </div>
+
+            </main>
+        </div>
+    </div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 
