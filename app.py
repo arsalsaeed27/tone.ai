@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, jsonify
 from ai_handler import convert_tone
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/")
 def home():
