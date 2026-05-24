@@ -3,12 +3,10 @@
 An AI-powered text tone conversion web app built with Python, Flask, and a dual-provider AI backend (Groq + Ollama fallback)
 Paste any text, pick a tone, and get it rewritten instantly. Professionally, casually, aggressively, or however you need it
 
-Live demo: [web-production-b8b2d.up.railway.app](https://web-production-b8b2d.up.railway.app)
-
 ---
 
 ## Demo
- - You can check it out here: https://tone-ai-2on8.onrender.com
+ - You can check it out here: https://web-production-b8b2d.up.railway.app/
 Enter text → Select tone → Click Convert (or Ctrl + Enter) → Copy result
 
 ---
