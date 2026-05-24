@@ -6,8 +6,6 @@ let triggerBtn = null;
 let popup = null;
 let selectedText = '';
 let selectionRange = null;
-
-// ── Create the small trigger button that appears on text selection ──
 function createTriggerBtn() {
     const btn = document.createElement('div');
     btn.id = 'toneai-trigger';
@@ -25,7 +23,6 @@ function createTriggerBtn() {
     return btn;
 }
 
-// ── Create the main popup card ──
 function createPopup() {
     const el = document.createElement('div');
     el.id = 'toneai-popup';
@@ -60,15 +57,12 @@ function createPopup() {
   `;
     document.body.appendChild(el);
 
-    // Close button
     el.querySelector('#toneai-close').addEventListener('click', closeAll);
 
-    // Tone buttons
     el.querySelectorAll('.tai-tone-btn').forEach(btn => {
         btn.addEventListener('click', () => convertTone(btn.dataset.tone));
     });
 
-    // Copy button
     el.querySelector('#toneai-copy').addEventListener('click', () => {
         const text = el.querySelector('#toneai-result-text').textContent;
         navigator.clipboard.writeText(text).then(() => {
@@ -78,7 +72,6 @@ function createPopup() {
         });
     });
 
-    // Replace button
     el.querySelector('#toneai-replace').addEventListener('click', () => {
         const text = el.querySelector('#toneai-result-text').textContent;
         if (selectionRange) {
@@ -91,14 +84,12 @@ function createPopup() {
     return el;
 }
 
-// ── Position element near the selection ──
 function positionNear(el, rect, offset = 8) {
     const scrollY = window.scrollY;
     const scrollX = window.scrollX;
     let top = rect.bottom + scrollY + offset;
     let left = rect.left + scrollX;
 
-    // Keep within viewport horizontally
     const elWidth = el.offsetWidth || 280;
     if (left + elWidth > window.innerWidth + scrollX - 16) {
         left = window.innerWidth + scrollX - elWidth - 16;
@@ -109,7 +100,6 @@ function positionNear(el, rect, offset = 8) {
     el.style.left = `${left}px`;
 }
 
-// ── Show the small trigger button ──
 function showTriggerBtn(rect) {
     if (!triggerBtn) triggerBtn = createTriggerBtn();
     const scrollY = window.scrollY;
@@ -119,11 +109,9 @@ function showTriggerBtn(rect) {
     triggerBtn.style.display = 'flex';
 }
 
-// ── Show the full popup ──
 function showPopup() {
     if (!popup) popup = createPopup();
 
-    // Reset state
     popup.querySelector('#toneai-output').style.display = 'none';
     popup.querySelector('#toneai-loading').style.display = 'none';
     popup.querySelector('#toneai-error').style.display = 'none';
@@ -143,7 +131,6 @@ function showPopup() {
     if (triggerBtn) triggerBtn.style.display = 'none';
 }
 
-// ── Call the API ──
 async function convertTone(tone) {
     const loading = popup.querySelector('#toneai-loading');
     const output = popup.querySelector('#toneai-output');
@@ -179,7 +166,6 @@ async function convertTone(tone) {
     }
 }
 
-// ── Close everything ──
 function closeAll() {
     if (triggerBtn) triggerBtn.style.display = 'none';
     if (popup) popup.style.display = 'none';
@@ -187,9 +173,7 @@ function closeAll() {
     selectionRange = null;
 }
 
-// ── Listen for text selection ──
 document.addEventListener('mouseup', (e) => {
-    // Don't trigger inside our own popup
     if (e.target.closest('#toneai-popup') || e.target.closest('#toneai-trigger')) return;
 
     setTimeout(() => {
@@ -206,7 +190,6 @@ document.addEventListener('mouseup', (e) => {
     }, 10);
 });
 
-// ── Close when clicking outside ──
 document.addEventListener('mousedown', (e) => {
     if (
         popup && popup.style.display === 'block' &&

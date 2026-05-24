@@ -28,7 +28,6 @@ body {
     padding: 0 36px;
 }
 
-/* ── Topbar ── */
 .topbar {
     display: flex;
     align-items: center;
@@ -83,7 +82,6 @@ body {
     font-weight: 500;
 }
 
-/* ── Body grid ── */
 .body-grid {
     display: grid;
     grid-template-columns: 195px 1fr;
@@ -92,7 +90,6 @@ body {
     overflow: hidden;
 }
 
-/* ── Sidebar ── */
 .sidebar {
     border-right: 0.5px solid #27272a;
     padding: 20px 20px 20px 0;
@@ -185,7 +182,6 @@ body {
     text-transform: uppercase;
 }
 
-/* ── Main ── */
 .main {
     padding: 20px 0 20px 24px;
     display: flex;
@@ -195,7 +191,6 @@ body {
     min-height: 0;
 }
 
-/* ── Main header ── */
 .main-header {
     display: flex;
     align-items: flex-end;
@@ -240,7 +235,6 @@ body {
     flex-shrink: 0;
 }
 
-/* ── Error ── */
 .error-box {
     background: #1f0e0e;
     border: 0.5px solid #5a1a1a;
@@ -252,7 +246,6 @@ body {
     flex-shrink: 0;
 }
 
-/* ── Panels ── */
 .panels {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -270,7 +263,6 @@ body {
     overflow: hidden;
 }
 
-/* Dark grey input panel — replaces old white */
 .panel-light {
     background: #2a2a2e;
     border: 0.5px solid #3f3f46;
@@ -424,7 +416,6 @@ textarea:focus {
     opacity: 0.7;
 }
 
-/* ── Action row ── */
 .action-row {
     display: flex;
     align-items: center;
